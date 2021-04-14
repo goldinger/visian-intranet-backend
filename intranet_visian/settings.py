@@ -29,7 +29,7 @@ SECRET_KEY = ')i^unj=$^-pp4e4%@f080e5y13_ac1gf$3=0pq*e)&z_+#cypi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,9 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
+    'rest_framework',
+    "rest_framework.authtoken",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +57,22 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = (
+   'accept',
+   'accept-encoding',
+   'authorization',
+   'content-type',
+   'dnt',
+   'origin',
+   'user-agent',
+   'x-csrftoken',
+   'x-requested-with',
+   'app-key',
+)
 
 ROOT_URLCONF = 'intranet_visian.urls'
 
@@ -90,26 +110,26 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
+# ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
@@ -123,27 +143,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
 
-AUTHENTICATION_BACKENDS = (
-    "app.auth.CustomLDAPBackend",
-    "django.contrib.auth.backends.ModelBackend",
-    "django.contrib.auth.backends.RemoteUserBackend",
-)
-
-AUTH_LDAP_SERVER_URI = "ldap://localhost:10389"
-# AUTH_LDAP_BIND_DN = "uid=admin,ou=system"
-# AUTH_LDAP_BIND_PASSWORD = "secret"
-
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=system"
-
-# AUTH_LDAP_USER_SEARCH = LDAPSearch(
-#     "ou=Users,dc=example,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(user)s)"
+# AUTHENTICATION_BACKENDS = (
+#     "app.auth.CustomLDAPBackend",
+#     "django.contrib.auth.backends.ModelBackend",
+#     "django.contrib.auth.backends.RemoteUserBackend",
 # )
-AUTH_LDAP_USER_ATTR_MAP = {
-    "username": "uid",
-    "first_name": "cn",
-    "last_name": "sn",
-    "email": "mail",
-    # "password": "userPassword"
-}
+#
+# AUTH_LDAP_SERVER_URI = "ldap://localhost:10389"
+# # AUTH_LDAP_BIND_DN = "uid=admin,ou=system"
+# # AUTH_LDAP_BIND_PASSWORD = "secret"
+#
+# AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=system"
+#
+# # AUTH_LDAP_USER_SEARCH = LDAPSearch(
+# #     "ou=Users,dc=example,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(user)s)"
+# # )
+# AUTH_LDAP_USER_ATTR_MAP = {
+#     "username": "uid",
+#     "first_name": "cn",
+#     "last_name": "sn",
+#     "email": "mail",
+#     # "password": "userPassword"
+# }
+
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
