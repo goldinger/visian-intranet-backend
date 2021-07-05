@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import ldap
-from django_auth_ldap.config import GroupOfNamesType, LDAPSearch
+# import ldap
+# from django_auth_ldap.config import GroupOfNamesType, LDAPSearch
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
