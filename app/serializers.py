@@ -10,7 +10,7 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = 'id', 'first_name', 'last_name', 'email', 'phone_number', 'profile_picture'
+        fields = 'id', 'first_name', 'last_name', 'email', 'phone_number', 'profile_picture', 'hiring_date', 'birthday'
 
     def get_profile_picture(self, obj: Person):
         if obj.profile_picture:
